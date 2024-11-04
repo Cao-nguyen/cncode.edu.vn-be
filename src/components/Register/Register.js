@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import './Register.scss'
 
 const Register = (props) => {
@@ -28,7 +28,7 @@ const Register = (props) => {
         }
 
         let reg = /\S+@\S+\.\S+/
-        if (reg.test(email)) {
+        if (!reg.test(email)) {
             setObjectCheckInput({ ...defaultValidInput, isValidEmail: false })
             toast.error('Email bạn nhập không đúng định dạng')
             return false
@@ -50,7 +50,7 @@ const Register = (props) => {
             return false
         }
 
-        if (password != confirmPassword) {
+        if (password !== confirmPassword) {
             toast.error('Xác nhận mật khẩu của bạn không đúng')
             setObjectCheckInput({ ...defaultValidInput, isValidConfirmPassword: false })
             return false
@@ -59,15 +59,16 @@ const Register = (props) => {
         return true
     }
 
-    const handleRegister = () => {
-        let check = validate()
+    const handleRegister = async () => {
+        let check = validate();
 
         if (check === true) {
             axios.post('http://localhost:8080/api/v1/register', {
                 email, phone, username, password
             })
         }
-    }
+    };
+
     useEffect(() => {
         // axios.get('http://localhost:8080/api/v1/test-api').then(data => {
 
@@ -115,7 +116,7 @@ const Register = (props) => {
                                 value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)}
                             />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <button className="btn btn-primary form-control"
                                 onClick={() => handleRegister()}
                             >Tạo tài khoản</button>

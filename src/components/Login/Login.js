@@ -17,7 +17,7 @@ const Login = (props) => {
                         <input className="form-control" type="password" placeholder='Password' />
                         <button className="btn btn-primary">Login</button>
                         <span className="text-center">
-                            <a href='#' className='forgot-password'>Forgot your password?</a>
+                            <a href='/' className='forgot-password'>Forgot your password?</a>
                         </span>
                         <hr />
                         <div className="text-center">

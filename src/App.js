@@ -1,25 +1,37 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { Toast } from "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import Nav from './components/Navigation/Nav';
+import Header from './components/Navigation/Header';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import Home from './components/Home/Home'
+import Home from './components/Home/Home';
 
-function App() {
+function MainLayout() {
+  const location = useLocation();
+  const noHeaderRoutes = ['/register'];
+  const customHeaderRoutes = [''];
+
+  let header;
+  if (noHeaderRoutes.includes(location.pathname)) {
+    header = null;
+  } else if (customHeaderRoutes.includes(location.pathname)) {
+    header = <Header />;
+  } else {
+    header = <Nav />;
+  }
+
   return (
-    <Router>
-      <Nav />
+    <div>
+      {header}
+
       <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/register">
-          <Register />
+        <Route path="/" exact component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/*">
+          <div>404 - Trang không tồn tại</div>
         </Route>
       </Switch>
 
@@ -34,6 +46,14 @@ function App() {
         draggable
         pauseOnHover
       />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <MainLayout />
     </Router>
   );
 }
