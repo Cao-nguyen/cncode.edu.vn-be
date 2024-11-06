@@ -7,8 +7,13 @@ import Header from './components/Navigation/Header';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Home from './components/Home/Home';
+import Users from './components/Users/User'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { useEffect, useState } from "react";
+import _ from "lodash"
 
 function MainLayout() {
+  const [account, setAccount] = useState('')
   const location = useLocation();
   const noHeaderRoutes = ['/register'];
   const customHeaderRoutes = [''];
@@ -22,12 +27,20 @@ function MainLayout() {
     header = <Nav />;
   }
 
+  useEffect(() => {
+    let session = sessionStorage.getItem('account')
+    if (session) {
+      setAccount(JSON.parse(session))
+    }
+  }, [])
+
   return (
     <div>
-      {header}
+      {account && !_.isEmpty(account) && account.isAuthenticated && header}
 
       <Switch>
         <Route path="/" exact component={Home} />
+        <Route path="/users" component={Users} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/*">
