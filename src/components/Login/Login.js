@@ -34,10 +34,17 @@ const Login = (props) => {
 
             sessionStorage.setItem('account', JSON.stringify(data))
             history.push('/')
+            window.location.reload()
         }
 
         if (response && response.data && response.data.EC !== 0) {
             toast.error(response.data.EM)
+        }
+    }
+
+    const handlePressEnter = (event) => {
+        if (event.key === 'Enter') {
+            handleLogin()
         }
     }
 
@@ -51,9 +58,22 @@ const Login = (props) => {
                     </div>
                     <div className="content-right col-12 col-sm-5 d-flex flex-column gap-3 py-3">
                         <div className="brand d-sm-none">Lý Cao Nguyên</div>
-                        <input className="form-control" value={valueLogin} onChange={(event) => { setValueLogin(event.target.value) }} type="text" placeholder='Email address or phone number' />
-                        <input className="form-control" value={password} onChange={(event) => { setPassword(event.target.value) }} type="password" placeholder='Password' />
-                        <button className="btn btn-primary" onClick={() => handleLogin()}>Login</button>
+                        <input className="form-control"
+                            value={valueLogin}
+                            onChange={(event) => setValueLogin(event.target.value)}
+                            type="text"
+                            placeholder='Email address or phone number'
+                        />
+                        <input className="form-control"
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
+                            type="password"
+                            placeholder='Password'
+                            onKeyDown={handlePressEnter}
+                        />
+                        <button className="btn btn-primary"
+                            onClick={handleLogin}
+                        >Login</button>
                         <span className="text-center">
                             <a href='/login' className='forgot-password'>Forgot your password?</a>
                         </span>
