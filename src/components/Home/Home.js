@@ -1,5 +1,6 @@
 import React from 'react';
 import TinyMCEEditor from '../TinyMCEEditor/TinyMCE.js'
+import IDE from '../IDE/IDE.js'
 import { useState } from "react";
 
 const Home = (props) => {
@@ -19,6 +20,9 @@ const Home = (props) => {
                 LÝ CAO NGUYÊN
             </div>
             <h3 className="text-center">Xin chào các bạn mình là Lý Cao Nguyên</h3>
+            <div className="IDE">
+                <IDE />
+            </div>
             <div className="container-login">
                 <TinyMCEEditor value={editorValue} onChange={handleEditorChange} />
             </div>
